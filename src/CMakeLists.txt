@@ -130,11 +130,13 @@ endif(NOT APPLE)
 
 if(FREELIB_QT_MAJOR_VERSION EQUAL 6)
     qt6_add_resources(PROJECT_SOURCES resource.qrc)
+	set(app_icon_resource_windows "${CMAKE_CURRENT_SOURCE_DIR}/win.rc")
     if(WIN32)
 		qt_add_executable(freelib
 			WIN32
 			MANUAL_FINALIZATION
-			${PROJECT_SOURCES})
+			${PROJECT_SOURCES}
+			${app_icon_resource_windows})
     else()
 		qt_add_executable(freelib
 			MANUAL_FINALIZATION
