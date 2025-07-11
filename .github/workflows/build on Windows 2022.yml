@@ -21,10 +21,12 @@ jobs:
 #        run: |
 #          pip install aqtinstall
 #          python -m aqt install-qt windows desktop 6.8.3 win64_mingw
-      - name: Install zlib
-        uses: crazy-max/ghaction-chocolatey@v3
-        with:
-          args: install zlib
+      - name: Install zlib with vcpkg
+        shell: pwsh
+        run: |
+          vcpkg install zlib
+          echo "##vso[task.prependpath]$env:VCPKG_INSTALLATION_ROOT/installed/$($env:VCPKG_TARGET_TRIPLET)/bin"
+
       - name: Install mingw
         uses: crazy-max/ghaction-chocolatey@v3
         with:
