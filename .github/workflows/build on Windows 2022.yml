@@ -29,10 +29,10 @@ jobs:
           echo "##vso[task.prependpath]$env:VCPKG_INSTALLATION_ROOT/installed/$($env:VCPKG_TARGET_TRIPLET)/bin"
           #Get-ChildItem -Path "$env:VCPKG_INSTALLATION_ROOT/scripts" -Recurse
 
-      - name: Install mingw
-        uses: crazy-max/ghaction-chocolatey@v3
-        with:
-          args: install mingw --version=13.2.0  -y
+      #- name: Install mingw
+      #  uses: crazy-max/ghaction-chocolatey@v3
+      #  with:
+      #    args: install mingw --version=13.2.0  -y
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
@@ -62,7 +62,8 @@ jobs:
         #run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
         run: |
           dir env:
-          cmake --debug-find -DCMAKE_PREFIX_PATH=C:/mingw64/ -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/installed/x64-windows/share/zlib/vcpkg-cmake-wrapper.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "CodeBlocks - MinGW Makefiles" -B ${{github.workspace}}/build
+          cat C:/vcpkg/scripts/buildsystems/vcpkg.cmake
+          cmake --debug-find -DCMAKE_PREFIX_PATH=C:/mingw64/ -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "CodeBlocks - MinGW Makefiles" -B ${{github.workspace}}/build
 
       - name: Build
         # Build your program with the given configuration
