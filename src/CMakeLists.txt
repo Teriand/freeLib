@@ -206,11 +206,11 @@ if(TBB_FOUND)
     target_link_libraries(freelib PRIVATE TBB::tbb)
 endif()
 
-#target_link_libraries(freelib PUBLIC SmtpMime Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Network -LH:/Qt/freeLib-master/src/SmtpClient/build/lib/libSmtpMime.dll.a)
-target_link_libraries(freelib PUBLIC SmtpMime -LH:/Qt/freeLib-master/src/SmtpClient/build/lib/)
-target_compile_definitions(freelib
-	    PRIVATE SMTP_MIME_LIBRARY
-    )
+# target_link_libraries(freelib PUBLIC SmtpMime Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Network -LH:/Qt/freeLib-master/src/SmtpClient/build/lib/libSmtpMime.dll.a)
+# target_link_libraries(freelib PUBLIC SmtpMime -LH:/Qt/freeLib-master/src/SmtpClient/build/lib/)
+# target_compile_definitions(freelib
+#	    PRIVATE SMTP_MIME_LIBRARY
+#    )
 target_precompile_headers(freelib
   PRIVATE
     precompiled.h
