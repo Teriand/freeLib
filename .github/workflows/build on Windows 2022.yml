@@ -31,7 +31,7 @@ jobs:
           version: ${{ env.QT_VERSION }}
           host: 'windows'
           target: 'desktop'
-          arch: ${{ MINGW_VERSION }}
+          arch: ${{ env.MINGW_VERSION }}
           #dir: '${{ github.workspace }}/qt683/'
           install-deps: 'true'
           # modules: 'qtcharts qtwebengine'
