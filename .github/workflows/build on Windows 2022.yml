@@ -21,7 +21,11 @@ jobs:
 #        run: |
 #          pip install aqtinstall
 #          python -m aqt install-qt windows desktop 6.8.3 win64_mingw
-      - name: Install correct version of mingw
+      - name: Install zlib
+        uses: crazy-max/ghaction-chocolatey@v3
+        with:
+          args: install zlib
+      - name: Install mingw
         uses: crazy-max/ghaction-chocolatey@v3
         with:
           args: install mingw --version=13.2.0  -y
