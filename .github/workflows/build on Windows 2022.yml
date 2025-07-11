@@ -19,10 +19,8 @@ jobs:
           submodules: true
       - name: Install zlib with vcpkg
         shell: pwsh
-        #env:
-        #  VCPKG_BUILD_TYPE: release
         run: |
-          vcpkg install zlib:x64-windows-release tbb:x64-windows-release
+          vcpkg install zlib tbb
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
