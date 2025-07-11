@@ -25,9 +25,9 @@ jobs:
         shell: pwsh
         run: |
           vcpkg install zlib
-          dir env:
+          #dir env:
           echo "##vso[task.prependpath]$env:VCPKG_INSTALLATION_ROOT/installed/$($env:VCPKG_TARGET_TRIPLET)/bin"
-          Get-ChildItem -Path "$env:VCPKG_INSTALLATION_ROOT" -Recurse
+          #Get-ChildItem -Path "$env:VCPKG_INSTALLATION_ROOT/scripts" -Recurse
 
       - name: Install mingw
         uses: crazy-max/ghaction-chocolatey@v3
@@ -56,14 +56,14 @@ jobs:
           Write-Output (Get-Command mingw32-make.exe).Path
           mingw32-make.exe -version
       - name: Configure CMake
-        #env:
+        env:
+          CMAKE_FIND_DEBUG_MODE: "TRUE"
           #CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
         # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
         #run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
         run: |
-          set
-          cmake -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "MinGW Makefiles" -B ${{github.workspace}}/build
+          cmake -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/installed/x64-windows/share/zlib/vcpkg-cmake-wrapper.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "MinGW Makefiles" -B ${{github.workspace}}/build
 
       - name: Build
         # Build your program with the given configuration
