@@ -1,5 +1,6 @@
 name: build on Windows 2022
 on:
+  workflow_dispatch:
   push:
     tags:
       - Release.*
