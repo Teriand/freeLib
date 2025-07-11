@@ -17,22 +17,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
-#      - name: Install Dependencies
-#        run: |
-#          pip install aqtinstall
-#          python -m aqt install-qt windows desktop 6.8.3 win64_mingw
       - name: Install zlib with vcpkg
         shell: pwsh
         run: |
           vcpkg install zlib
-          #dir env:
-          echo "##vso[task.prependpath]$env:VCPKG_INSTALLATION_ROOT/installed/$($env:VCPKG_TARGET_TRIPLET)/bin"
-          #Get-ChildItem -Path "$env:VCPKG_INSTALLATION_ROOT/scripts" -Recurse
-
-      #- name: Install mingw
-      #  uses: crazy-max/ghaction-chocolatey@v3
-      #  with:
-      #    args: install mingw --version=13.2.0  -y
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
@@ -40,12 +28,9 @@ jobs:
           host: 'windows'
           target: 'desktop'
           arch: ${{ env.MINGW_VERSION }}
-          #dir: '${{ github.workspace }}/qt683/'
           install-deps: 'true'
-          # modules: 'qtcharts qtwebengine'
-          # archives: 'qtbase qtsvg'
+          modules: 'all'
           setup-python: 'false'
-          #tools: 'tools_ifw tools_qtcreator,qt.tools.qtcreator'
           set-env: 'true'
       - name: (debug) Check QMake, CMake and make
         run: |
@@ -56,20 +41,12 @@ jobs:
           Write-Output (Get-Command mingw32-make.exe).Path
           mingw32-make.exe -version
       - name: Configure CMake
-          #CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
-        # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-        # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-        #run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
         run: |
-          dir env:
-          cat C:/vcpkg/scripts/buildsystems/vcpkg.cmake
-          cmake --debug-find -DCMAKE_PREFIX_PATH=C:/mingw64/ -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "CodeBlocks - MinGW Makefiles" -B ${{github.workspace}}/build
-
+          cmake --debug-find -DCMAKE_PREFIX_PATH=C:/mingw64/ -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "MinGW Makefiles" -B ${{github.workspace}}/build
       - name: Build
         # Build your program with the given configuration
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} -j4
       - name: Compress portable program
         run: |
           ls
-          Compress-Archive -Path ${{github.workspace}}\build\all\ -DestinationPath ${{github.workspace}}\build\final.zip
-
+          Compress-Archive -Path ${{github.workspace}}/build/all/ -DestinationPath ${{github.workspace}}/build/final.zip
