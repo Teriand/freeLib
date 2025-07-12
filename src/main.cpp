@@ -96,7 +96,7 @@ std::cout  << "freelib " << FREELIB_VERSION << "\n\nfreelib [Option [Parameters]
 
 int main(int argc, char *argv[])
 {
-    //Q_INIT_RESOURCE(resource);
+    Q_INIT_RESOURCE(resource);
 #ifdef USE_HTTSERVER
     bool bServer = false;
     QString sLanguageFilter;
