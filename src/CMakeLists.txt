@@ -113,6 +113,9 @@ if(TBB_FOUND)
     add_compile_definitions(USE_TBB)
 endif()
 
+configure_file(translations.qrc ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+file(COPY ${TS_FILES} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/translate)
+
 if(NOT APPLE)
     file(COPY xsl/fonts DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/xsl)
 endif(NOT APPLE)
