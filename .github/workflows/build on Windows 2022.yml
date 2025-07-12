@@ -40,7 +40,7 @@ jobs:
           cmake --install ./ --prefix ${{github.workspace}}\src\SmtpClient\final
           tree /F .
           cd ${{github.workspace}}
-          cmake --debug-find -DSmtpMime_DIR=${{github.workspace}}/src/SmtpClient/final/lib/cmake/smtpmime -DCMAKE_PREFIX_PATH=C:/mingw64/ -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "MinGW Makefiles" -B ${{github.workspace}}/build
+          cmake -DCMAKE_PREFIX_PATH=C:/mingw64/ -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "MinGW Makefiles" -B ${{github.workspace}}/build
           cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} -j4
       - name: always
         if: always()
