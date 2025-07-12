@@ -36,7 +36,7 @@ jobs:
         run: |
           cd ${{github.workspace}}\src\SmtpClient
           cmake -DCMAKE_PREFIX_PATH=C:/mingw64/ -DBUILD_TESTS=OFF -DBUILD_DEMOS=OFF -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "MinGW Makefiles"
-          cmake --build ./ --config ${{env.BUILD_TYPE}} -j4
+          cmake --build ${{github.workspace}}\src\SmtpClient\final --config ${{env.BUILD_TYPE}} -j4
           cmake --install ${{github.workspace}}\src\SmtpClient\final
           tree /F .
           cd ${{github.workspace}}
