@@ -111,6 +111,8 @@ find_package(TBB QUIET)
 if(TBB_FOUND)
     message(STATUS "Found TBB")
     add_compile_definitions(USE_TBB)
+endif()
+
 if(NOT APPLE)
     file(COPY xsl/fonts DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/xsl)
 endif(NOT APPLE)
