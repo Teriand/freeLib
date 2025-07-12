@@ -44,10 +44,10 @@ jobs:
           cd ${{github.workspace}}\final
           tree /F
           cd bin
-          windeployqt.exe freelib.exe --release
-          Compress-Archive -Path . -DestinationPath ${{github.workspace}}/build/final.zip
+          windeployqt.exe freelib.exe --release --no-translations --no-system-d3d-compiler --no-opengl-sw 
+          Copy-Item -Path "C:/vcpkg/installed/x64-windows/lib/bin/zlib1.dll -Destination .
       - name: always
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          path: ${{github.workspace}}/build/final.zip
+          path: ${{github.workspace}}/final/bin/
