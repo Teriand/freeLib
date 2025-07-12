@@ -211,7 +211,7 @@ if(QSmtpMime_FOUND)
     message(STATUS "Found SmtpMime")
 endif()
 # target_link_libraries(${PROJECT_NAME} PRIVATE SmtpMime::SmtpMime)
-target_link_libraries({PROJECT_NAME} PUBLIC SmtpMime -LSmtpClient/final/lib/)
+target_link_libraries(${PROJECT_NAME} PUBLIC SmtpMime -LSmtpClient/final/lib/)
 
 target_precompile_headers(freelib
   PRIVATE
