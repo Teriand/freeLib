@@ -45,7 +45,7 @@ jobs:
           tree /F
           cd bin
           windeployqt.exe freelib.exe --release
-          Compress-Archive -DestinationPath ${{github.workspace}}/build/final.zip
+          Compress-Archive -Path . -DestinationPath ${{github.workspace}}/build/final.zip
       - name: always
         if: always()
         uses: actions/upload-artifact@v4
