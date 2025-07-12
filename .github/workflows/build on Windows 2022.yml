@@ -44,8 +44,20 @@ jobs:
         run: |
           cmake --debug-find -DCMAKE_PREFIX_PATH=C:/mingw64/ -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "MinGW Makefiles" -B ${{github.workspace}}/build
       - name: Build
-        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} -j4
+        run: cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} -j4
+      - name: always
+        if: always()
+        run: |
+          tree /F
+      - name: always
+        if: always()
+        uses: actions/upload-artifact@v1
+        with:
+          path: |
+             ${{github.workspace}}\build
+             ${{github.workspace}}\src
       - name: Compress portable program
         run: |
-          ls
-          Compress-Archive -Path ${{github.workspace}}/build/all/ -DestinationPath ${{github.workspace}}/build/final.zip
+          cd ${{github.workspace}}\build
+          windeployqt.exe freelib.exe --release
+          Compress-Archive -Path ${{github.workspace}}/build/ -DestinationPath ${{github.workspace}}/build/final.zip
