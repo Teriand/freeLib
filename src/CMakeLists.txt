@@ -206,12 +206,13 @@ if(TBB_FOUND)
     target_link_libraries(freelib PRIVATE TBB::tbb)
 endif()
 
-find_package(SmtpMime QUIET)
-if(QSmtpMime_FOUND)
-    message(STATUS "Found SmtpMime")
-endif()
+#find_package(SmtpMime QUIET)
+#if(QSmtpMime_FOUND)
+    #message(STATUS "Found SmtpMime")
+#endif()
 # target_link_libraries(${PROJECT_NAME} PRIVATE SmtpMime::SmtpMime)
 target_link_libraries(${PROJECT_NAME} PUBLIC SmtpMime -LSmtpClient/final/lib/)
+target_link_libraries(${PROJECT_NAME} PUBLIC SmtpMime -Lsrc/SmtpClient/final/lib/)
 
 target_precompile_headers(freelib
   PRIVATE
