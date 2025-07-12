@@ -32,6 +32,7 @@ jobs:
           modules: 'qt5compat qthttpserver'
           setup-python: 'false'
           set-env: 'true'
+          tools: 'tools_mingw1310'
       - name: Configure FreeLib
         run: cmake -DCMAKE_PREFIX_PATH=C:/mingw64/ -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "MinGW Makefiles" -B ${{github.workspace}}/build
       - name: Build FreeLib
