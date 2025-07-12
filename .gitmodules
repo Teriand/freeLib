@@ -3,5 +3,5 @@
 	url = https://github.com/stachenov/quazip.git
 [submodule "freeLib/src/SmtpClient"]
 	path = src/SmtpClient
-	url = https://github.com/petrovvlad/SmtpClient-for-Qt.git
+	url = https://github.com/Teriand/SmtpClient-for-Qt.git
 	branch = master
