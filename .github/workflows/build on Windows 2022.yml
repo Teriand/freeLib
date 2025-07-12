@@ -32,14 +32,18 @@ jobs:
           modules: 'qt5compat qthttpserver'
           setup-python: 'false'
           set-env: 'true'
-          tools: 'tools_mingw1310'
+          tools: 'tools_mingw1310' # base 12.2 with link error
       - name: Configure FreeLib
         run: cmake -DCMAKE_PREFIX_PATH=C:/mingw64/ -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "MinGW Makefiles" -B ${{github.workspace}}/build
       - name: Build FreeLib
         run: cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} -j4
+      - name: Install FreeLib
+        run: cmake --install ${{github.workspace}}\build --prefix ${{github.workspace}}\final
       - name: Compress portable program
         run: |
-          cd ${{github.workspace}}\build
+          cd ${{github.workspace}}\final
+          tree /F
+          cd bin
           windeployqt.exe freelib.exe --release
           Compress-Archive -DestinationPath ${{github.workspace}}/build/final.zip
       - name: always
