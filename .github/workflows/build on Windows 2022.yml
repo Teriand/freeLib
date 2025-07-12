@@ -32,30 +32,17 @@ jobs:
           modules: 'qt5compat qthttpserver'
           setup-python: 'false'
           set-env: 'true'
-      - name: Configure and build FreeLib
-        run: |
-          cd ${{github.workspace}}\src\SmtpClient
-          cmake -B ./ -DCMAKE_PREFIX_PATH=C:/mingw64/ -DBUILD_TESTS=OFF -DBUILD_DEMOS=OFF -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "MinGW Makefiles"
-          cmake --build ./ --config ${{env.BUILD_TYPE}} -j4
-          cmake --install ./ --prefix ${{github.workspace}}\src\SmtpClient\final
-          #tree /F .
-          cd ${{github.workspace}}
+      - name: Configure FreeLib
           cmake -DCMAKE_PREFIX_PATH=C:/mingw64/ -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "MinGW Makefiles" -B ${{github.workspace}}/build
+      - name: Build FreeLib
           cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} -j4
-      - name: always
-        if: always()
-        run: |
-          tree /F
-      - name: always
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          path: |
-             ${{github.workspace}}\build
-             ${{github.workspace}}\src
-             ${{github.workspace}}\build_smtp
       - name: Compress portable program
         run: |
           cd ${{github.workspace}}\build
           windeployqt.exe freelib.exe --release
-          Compress-Archive -Path ${{github.workspace}}/build/ -DestinationPath ${{github.workspace}}/build/final.zip
+          Compress-Archive -DestinationPath ${{github.workspace}}/build/final.zip
+      - name: always
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          path: ${{github.workspace}}/build/final.zip
