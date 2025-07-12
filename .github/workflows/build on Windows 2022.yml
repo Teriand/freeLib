@@ -33,9 +33,9 @@ jobs:
           setup-python: 'false'
           set-env: 'true'
       - name: Configure FreeLib
-          cmake -DCMAKE_PREFIX_PATH=C:/mingw64/ -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "MinGW Makefiles" -B ${{github.workspace}}/build
+        run: cmake -DCMAKE_PREFIX_PATH=C:/mingw64/ -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "MinGW Makefiles" -B ${{github.workspace}}/build
       - name: Build FreeLib
-          cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} -j4
+        run: cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} -j4
       - name: Compress portable program
         run: |
           cd ${{github.workspace}}\build
