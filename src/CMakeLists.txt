@@ -210,10 +210,12 @@ endif()
 #if(QSmtpMime_FOUND)
     #message(STATUS "Found SmtpMime")
 #endif()
+message(STATUS "CMAKE_CURRENT_SOURCE_DIR is ${CMAKE_CURRENT_SOURCE_DIR}")
 # target_link_libraries(${PROJECT_NAME} PRIVATE SmtpMime::SmtpMime)
-target_link_libraries(${PROJECT_NAME} PUBLIC SmtpMime -LSmtpClient/final/lib/)
-target_link_libraries(${PROJECT_NAME} PUBLIC SmtpMime -Lsrc/SmtpClient/final/lib/)
-
+target_link_libraries(freelib PUBLIC SmtpMime::SmtpMime -L${CMAKE_CURRENT_SOURCE_DIR}/SmtpClient/final/lib/)
+target_compile_definitions(freelib
+	    PRIVATE SMTP_MIME_LIBRARY
+    )
 target_precompile_headers(freelib
   PRIVATE
     precompiled.h
