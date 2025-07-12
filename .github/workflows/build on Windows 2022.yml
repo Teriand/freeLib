@@ -32,29 +32,26 @@ jobs:
           modules: 'qt5compat qthttpserver'
           setup-python: 'false'
           set-env: 'true'
-      - name: Configure CMake
+      - name: Configure and build SmtpClient
         run: |
           cd ${{github.workspace}}\src\SmtpClient
           cmake -DCMAKE_PREFIX_PATH=C:/mingw64/ -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "MinGW Makefiles" -B build
-          cd ${{github.workspace}}
-          cmake -DCMAKE_PREFIX_PATH=C:/mingw64/ -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "MinGW Makefiles" -B ${{github.workspace}}/build
-      - name: Build
-        run: |
-          cd ${{github.workspace}}\src\SmtpClient
           cmake --build build --config ${{env.BUILD_TYPE}} -j4
-          cd ${{github.workspace}}
+      - name: Configure and build FreeLib
+        run: |
+          cmake -DCMAKE_PREFIX_PATH=C:/mingw64/ -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "MinGW Makefiles" -B ${{github.workspace}}/build
           cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}} -j4
       - name: always
         if: always()
         run: |
           tree /F
-      - name: always
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          path: |
-             ${{github.workspace}}\build
-             ${{github.workspace}}\src
+      #- name: always
+      #  if: always()
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    path: |
+      #       ${{github.workspace}}\build
+      #       ${{github.workspace}}\src
       - name: Compress portable program
         run: |
           cd ${{github.workspace}}\build
