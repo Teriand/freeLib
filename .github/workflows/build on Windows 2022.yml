@@ -45,13 +45,14 @@ jobs:
         if: always()
         run: |
           tree /F
-      #- name: always
-      #  if: always()
-      #  uses: actions/upload-artifact@v4
-      #  with:
-      #    path: |
-      #       ${{github.workspace}}\build
-      #       ${{github.workspace}}\src
+      - name: always
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          path: |
+             ${{github.workspace}}\build
+             ${{github.workspace}}\src
+             ${{github.workspace}}\build_smtp
       - name: Compress portable program
         run: |
           cd ${{github.workspace}}\build
