@@ -20,7 +20,7 @@ jobs:
       - name: Install zlib with vcpkg
         shell: pwsh
         run: |
-          vcpkg install zlib tbb
+          vcpkg install zlib #tbb
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
