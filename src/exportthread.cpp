@@ -21,9 +21,6 @@
 #include <KIO/MkdirJob>
 #endif
 
-#include "SmtpClient/src/smtpclient.h"
-#include "SmtpClient/src/mimeattachment.h"
-#include "SmtpClient/src/mimetext.h"
 #ifdef QUAZIP_STATIC
 #include "quazip/quazip/quazipfile.h"
 #else
@@ -181,52 +178,6 @@ bool ExportThread::convert(const std::vector<QBuffer *> &vOutBuff, uint idLib, c
 
     if(send_type == ST_Mail)
     {
-       if(count > 1)
-       {
-           QEventLoop loop; QTimer::singleShot(pExportOptions_->nEmailPause*1000, &loop, &QEventLoop::quit); loop.exec();
-       }
-       SmtpClient smtp(pExportOptions_->sEmailServer, pExportOptions_->nEmailServerPort, (SmtpClient::ConnectionType)pExportOptions_->nEmailConnectionType);
-
-       MimeMessage msg(true);
-       msg.setHeaderEncoding(MimePart::Base64);
-       EmailAddress sender(pExportOptions_->sEmailFrom, u""_s);
-       msg.setSender(sender);
-       EmailAddress to(pExportOptions_->sEmail, u""_s);
-       msg.addRecipient(to);
-       QString caption = pExportOptions_->sEmailSubject;
-       msg.setSubject(caption.isEmpty() ?u"freeLib"_s :caption);
-
-       QBuffer outbuff;
-       QString FileName = current_out_file;
-       if(FileName.isEmpty())
-       {
-           return false;
-       }
-       QFile book_file(FileName);
-       if(!book_file.open(QFile::ReadOnly)) [[unlikely]]
-       {
-           LogWarning  << "Error open file name:" << FileName;
-           return false;
-       }
-       outbuff.setData(book_file.readAll());
-       book_file.close();
-       MimeText *pText = new MimeText;
-       QString onlyFileName = QFileInfo(sBookFileName).fileName();
-       pText->setText(onlyFileName);
-       msg.addPart(pText);
-       msg.addPart(new MimeAttachment(outbuff.data(), onlyFileName));
-       smtp.connectToHost();
-       smtp.waitForReadyConnected();
-       smtp.login(pExportOptions_->sEmailUser, pExportOptions_->sEmailPassword);
-       smtp.waitForAuthenticated();
-       smtp.sendMail(msg);
-       if(!smtp.waitForMailSent()) [[unlikely]]
-       {
-           LogWarning << "Error send e-mail.";
-           return false;
-       }
-
-       smtp.quit();
        return true;
     }
     else
