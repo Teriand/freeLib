@@ -1527,7 +1527,7 @@ void MainWindow::selectBook()
 #endif
             replace(u"#file_data#"_s, file.birthTime().toString(u"dd.MM.yyyy hh:mm:ss"_s)).
             replace(u"#file_name#"_s, /*file.fileName()*/book.sFile % u"."_s % book.sFormat).
-            replace(u"#infobcolor"_s, colorBInfo.name());
+            //replace(u"#infobcolor"_s, colorBInfo.name());
     ui->Review->setHtml(content);
 }
 
